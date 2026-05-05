@@ -2,7 +2,12 @@
 title: "Patrick's Auto Shop Scheduling Report"
 subtitle: "Simple decisions to get more cars fixed"
 format:
-  html: default
+  html:
+    include-in-header:
+      - text: |
+          <style>
+          .quarto-float-fig img.figure-img { max-width: 92%; height: auto; }
+          </style>
 execute:
   echo: false
   eval: true
@@ -39,8 +44,9 @@ The second chart shows that extra lift per day:
 ```{python}
 #| label: fig-all-250-days
 #| fig-cap: "Each dot is one shop-day from your log. Teal = you were at that shop; gray = you were not. Jitter spreads overlapping dots so you can see them all."
-#| fig-width: 9
-#| fig-height: 5.2
+#| fig-width: 8
+#| fig-height: 4.6
+#| out-width: 92%
 #| echo: false
 
 import matplotlib.pyplot as plt
@@ -50,7 +56,7 @@ import pandas as pd
 carsDF = pd.read_csv("carsFixed.csv")
 rng = np.random.default_rng(42)
 plot_df = carsDF.copy()
-fig, ax = plt.subplots(figsize=(9, 5.2))
+fig, ax = plt.subplots(figsize=(8, 4.6))
 fig.patch.set_facecolor("#FAFAFA")
 ax.set_facecolor("#FAFAFA")
 
@@ -87,8 +93,9 @@ plt.tight_layout()
 ```{python}
 #| label: fig-lift-by-shop
 #| fig-cap: "How many more cars per day, on average, when you are at that shop versus when you are not. Taller bars mean your time pays off more at that location."
-#| fig-width: 8.5
-#| fig-height: 4.2
+#| fig-width: 7.5
+#| fig-height: 3.8
+#| out-width: 92%
 #| echo: false
 
 import matplotlib.pyplot as plt
@@ -99,7 +106,7 @@ mean_by = carsDF.groupby(["shopID", "boss"])["carsFixed"].mean().unstack()
 lift = (mean_by[1] - mean_by[0]).sort_values(ascending=True)
 labels = [f"Shop {int(s)}" for s in lift.index]
 
-fig, ax = plt.subplots(figsize=(8.5, 4.2))
+fig, ax = plt.subplots(figsize=(7.5, 3.8))
 fig.patch.set_facecolor("#FAFAFA")
 ax.set_facecolor("#FAFAFA")
 med = float(lift.median())
@@ -164,8 +171,9 @@ It shows a clear pattern:
 ```{python}
 #| label: fig-scenario-projection
 #| fig-cap: "Illustrative projection: same 50 boss-days as in your log, split across shops in four ways. Bars show total expected extra cars (sum of days at each shop x that shop's average lift). Heavier time at Shops 2 and 4 pulls the total up; parking half of those days at Shop 3 drags it down."
-#| fig-width: 9
-#| fig-height: 4.8
+#| fig-width: 8
+#| fig-height: 4.3
+#| out-width: 92%
 #| echo: false
 
 import matplotlib.pyplot as plt
@@ -201,7 +209,7 @@ order = np.argsort(totals)
 labels = [labels[i] for i in order]
 totals = [totals[i] for i in order]
 
-fig, ax = plt.subplots(figsize=(9, 4.8))
+fig, ax = plt.subplots(figsize=(8, 4.3))
 fig.patch.set_facecolor("#FAFAFA")
 ax.set_facecolor("#FAFAFA")
 colors = []
