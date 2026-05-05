@@ -1,0 +1,8 @@
+# BUAD 621 — Decision Advocacy Challenge (index.qmd)
+# Install: python -m pip install -r requirements.txt
+pandas>=2.0
+matplotlib>=3.7
+seaborn>=0.13
+numpy>=1.24
+scipy>=1.10
+jupyter>=1.0
